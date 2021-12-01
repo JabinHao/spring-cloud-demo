@@ -1,0 +1,14 @@
+server:
+  port: 9091
+
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: 127.0.0.1
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9091/eureka/
+    register-with-eureka: false

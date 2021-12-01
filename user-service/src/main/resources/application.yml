@@ -1,0 +1,23 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: spring-cloud-user-service
+  datasource:
+    username: root
+    password: pvkYQN2yzVWZwGqcTzkb
+    url: jdbc:mysql://114.214.219.193:3309/spring_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      connection-timeout: 60000
+
+mybatis:
+  type-aliases-package: com.olivine.user.domain
+  mapper-locations:
+    - classpath:mapper/**Mapper.xml
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:9091/eureka/
