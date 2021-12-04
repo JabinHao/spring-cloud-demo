@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--指定约束文件-->
+<mapper namespace="com.olivine.user.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.olivine.user.domain.UserDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="uid" jdbcType="VARCHAR" property="uid"/>
+        <result column="gender" jdbcType="OTHER" property="gender"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="ctime" jdbcType="TIMESTAMP" property="ctime"/>
+        <result column="mtime" jdbcType="TIMESTAMP" property="mtime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        `id`, `uid`, gender, `name`, ctime, mtime
+    </sql>
+
+    <select id="selectByUid" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        where uid = #{uid}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_info
+        order by id
+    </select>
+
+    <delete id="deleteByUid" parameterType="String">
+        delete from user_info
+        where uid = #{uid,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insertUser" parameterType="com.olivine.user.domain.UserDO" keyProperty="id" useGeneratedKeys="true">
+        insert into user_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="gender != null">
+                gender,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="mtime != null">
+                mtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id, jdbcType=BIGINT},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="gender != null">
+                #{gender},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByUid" parameterType="com.olivine.user.domain.UserDO">
+        update user_info
+        <set>
+            <if test="gender != null">
+                gender = #{gender,jdbcType=OTHER},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+
+</mapper>
