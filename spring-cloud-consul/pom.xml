@@ -37,6 +37,8 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
                 <version>${spring-cloud.version}</version>
             </dependency>
             <dependency>
@@ -51,5 +53,17 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+<!--    <dependencies>-->
+<!--        &lt;!&ndash; https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-dependencies</artifactId>-->
+<!--            <version>2021.0.0</version>-->
+<!--            <type>pom</type>-->
+<!--            <scope>runtime</scope>-->
+<!--        </dependency>-->
+
+<!--    </dependencies>-->
 
 </project>

@@ -14,7 +14,7 @@ spring:
       host: 114.214.219.193
       port: 8500
       discovery:
-        instance-id: ${spring.application.name}-02
+        instance-id: ${spring.application.name}-01
         service-name: ${spring.application.name}
         port: ${server.port}
         prefer-ip-address: true
