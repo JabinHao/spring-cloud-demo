@@ -1,0 +1,33 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: spring-cloud-user-service
+  datasource:
+    username: root
+    password: pvkYQN2yzVWZwGqcTzkb
+    url: jdbc:mysql://114.214.219.193:3309/spring_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    consul:
+      host: 114.214.219.193
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}-01
+        service-name: ${spring.application.name}
+        port: ${server.port}
+        prefer-ip-address: true
+        ip-address: ${spring.cloud.client.ip-address}
+        health-check-interval: 10s
+        register: false
+
+mybatis:
+  type-aliases-package: com.olivine.user.domain
+  mapper-locations:
+    - classpath:mybatis/mapper/**Mapper.xml
+
+custom:
+  order:
+    name: spring-cloud-consul-order-service
+    port: 8091
