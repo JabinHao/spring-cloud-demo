@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--指定约束文件-->
-<mapper namespace="UserMapper">
+<mapper namespace="com.olivine.user.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="UserDO">
         <id column="id" jdbcType="BIGINT" property="id"/>

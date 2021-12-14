@@ -18,9 +18,9 @@ spring:
         service-name: ${spring.application.name}
         port: ${server.port}
         prefer-ip-address: true
-        ip-address: ${spring.cloud.client.ip-address}
+#        ip-address: ${spring.cloud.client.ip-address}
         health-check-interval: 10s
-        register: false
+        ip-address: 114.214.219.193
 
 mybatis:
   type-aliases-package: com.olivine.user.domain

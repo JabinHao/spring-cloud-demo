@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * @Date 2021/12/14 0:34
  * @Description
  */
-@FeignClient(value = "spring-cloud-user-service", url = "http://localhost:8082/user")
+//@FeignClient(value = "spring-cloud-user-service", url = "http://localhost:8082/user")
+@FeignClient(value = "spring-cloud-user-service")
 public interface UserService {
 
-    @RequestMapping(value = "/get/info/{uid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/get/info/{uid}", method = RequestMethod.GET)
     CommonResponse<UserDTO> getUserInfo(@PathVariable("uid") String uid);
 }

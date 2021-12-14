@@ -14,9 +14,10 @@ import java.util.List;
  * @Date 2021/12/14 0:32
  * @Description
  */
-@FeignClient(value = "spring-cloud-order-service", url = "http://localhost:8081/order")
+//@FeignClient(value = "spring-cloud-order-service", url = "http://localhost:8081/order")
+@FeignClient(value = "spring-cloud-consul-order-service")
 public interface OrderService {
 
-    @RequestMapping(value = "/get/by/uid/{uid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/get/by/uid/{uid}", method = RequestMethod.GET)
     CommonResponse<List<OrderDTO>> getByUid(@PathVariable("uid") String uid);
 }

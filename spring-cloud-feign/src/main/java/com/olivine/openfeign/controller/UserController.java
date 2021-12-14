@@ -1,6 +1,7 @@
 package com.olivine.openfeign.controller;
 
 import com.olivine.common.dto.base.CommonResponse;
+import com.olivine.openfeign.remote.order.OrderService;
 import com.olivine.openfeign.remote.order.dto.OrderDTO;
 import com.olivine.openfeign.remote.user.UserService;
 import com.olivine.openfeign.remote.user.dto.UserDTO;
@@ -22,8 +23,11 @@ public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    private final OrderService orderService;
+
+    public UserController(UserService userService, OrderService orderService) {
         this.userService = userService;
+        this.orderService = orderService;
     }
 
     @RequestMapping(value = "/get/user/{uid}", method = RequestMethod.GET)
@@ -33,4 +37,10 @@ public class UserController {
 
         return info;
     }
+
+    @RequestMapping(value = "/get/order/{uid}", method = RequestMethod.GET)
+    public CommonResponse<List<OrderDTO>> getByUid(@PathVariable("uid") String uid){
+        return orderService.getByUid(uid);
+    }
+
 }
