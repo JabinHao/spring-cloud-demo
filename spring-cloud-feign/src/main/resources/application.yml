@@ -1,0 +1,22 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: spring-cloud-feign-client
+logging:
+  level:
+    com:
+      olivine:
+        openfeign:
+          remote: debug
+
+feign:
+  client:
+    config:
+#      default: # 全局配置
+      spring-cloud-order-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+      spring-cloud-user-service:
+        loggerLevel: HEADERS

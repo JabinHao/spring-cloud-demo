@@ -16,6 +16,7 @@
         <module>order</module>
         <module>user</module>
         <module>spring-cloud-consul</module>
+        <module>spring-cloud-feign</module>
     </modules>
 
     <groupId>com.olivine</groupId>
@@ -38,6 +39,8 @@
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
+                <type>pom</type>
+                <scope>import</scope>
                 <version>${spring-cloud.version}</version>
             </dependency>
             <dependency>
