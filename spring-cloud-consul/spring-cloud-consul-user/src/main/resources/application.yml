@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: spring-cloud-user-service
+    name: spring-cloud-consul-user-service
   datasource:
     username: root
     password: pvkYQN2yzVWZwGqcTzkb

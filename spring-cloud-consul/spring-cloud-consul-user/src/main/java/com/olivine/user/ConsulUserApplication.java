@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
  * @Date 2021/11/26 18:24
  * @Description
  */
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @MapperScan("com.olivine.user.mapper")
 @SpringBootApplication
 public class ConsulUserApplication {
