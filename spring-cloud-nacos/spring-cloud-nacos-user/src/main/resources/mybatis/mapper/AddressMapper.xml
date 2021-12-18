@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--指定约束文件-->
+<mapper namespace="com.olivine.user.mapper.AddressMapper">
+
+    <resultMap type="AddressDO" id="addressMap">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="phone" column="phone" jdbcType="VARCHAR"/>
+        <result property="region" column="region" jdbcType="VARCHAR"/>
+        <result property="detail" column="detail" jdbcType="VARCHAR"/>
+        <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+        <result property="mtime" column="mtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, uid, name, phone, region, detail, ctime, mtime
+    </sql>
+
+    <select id="selectByUid" parameterType="string" resultMap="addressMap">
+        select
+        <include refid="Base_Column_List"/>
+        from user_address_info
+        where uid = #{uid,jdbcType=VARCHAR}
+        order by mtime
+    </select>
+
+    <insert id="insert" keyColumn="id" keyProperty="id" parameterType="AddressDO" useGeneratedKeys="true">
+        insert into user_address_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                `uid`,
+            </if>
+            <if test="name != null">
+                `name`,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="detail != null">
+                detail,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="mtime != null">
+                mtime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into user_address_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="entities[0].uid != null">
+                `uid`,
+            </if>
+            <if test="entities[0].name != null">
+                `name`,
+            </if>
+            <if test="entities[0].phone != null">
+                phone,
+            </if>
+            <if test="entities[0].region != null">
+                region,
+            </if>
+            <if test="entities[0].detail != null">
+                detail,
+            </if>
+            <if test="entities[0].ctime != null">
+                ctime,
+            </if>
+            <if test="entities[0].mtime != null">
+                mtime,
+            </if>
+        </trim>
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="entity.uid != null">
+                    #{entity.uid,jdbcType=VARCHAR},
+                </if>
+                <if test="entity.name != null">
+                    #{entity.name,jdbcType=VARCHAR},
+                </if>
+                <if test="entity.phone != null">
+                    #{entity.phone,jdbcType=VARCHAR},
+                </if>
+                <if test="entity.region != null">
+                    #{entity.region,jdbcType=VARCHAR},
+                </if>
+                <if test="entity.detail != null">
+                    #{entity.detail,jdbcType=VARCHAR},
+                </if>
+                <if test="entity.ctime != null">
+                    #{entity.ctime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="entity.mtime != null">
+                    #{entity.mtime,jdbcType=TIMESTAMP},
+                </if>
+            </trim>
+        </foreach>
+    </insert>
+
+    <update id="updateByUid" parameterType="AddressDO">
+        update user_address_info
+        <set>
+            <if test="uid != null">
+                `uid` = #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                `name` = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="detail != null">
+                detail = #{detail,jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                ctime = #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                mtime = #{mtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where uid = #{uid,jdbcType=VARCHAR}
+    </update>
+
+    <!--    <update id="updateBatchByUid"-->
+    <update id="updateBatchByUid" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update user_address_info
+            <set>
+                <if test="name != null">
+                    `name` = #{name,jdbcType=VARCHAR},
+                </if>
+                <if test="phone != null">
+                    phone = #{phone,jdbcType=VARCHAR},
+                </if>
+                <if test="region != null">
+                    region = #{region,jdbcType=VARCHAR},
+                </if>
+                <if test="detail != null">
+                    detail = #{detail,jdbcType=VARCHAR},
+                </if>
+                <if test="ctime != null">
+                    ctime = #{ctime,jdbcType=TIMESTAMP},
+                </if>
+                <if test="mtime != null">
+                    mtime = #{mtime,jdbcType=TIMESTAMP},
+                </if>
+            </set>
+            where uid = ${item.uid}
+        </foreach>
+    </update>
+
+    <delete id="deleteByUid" parameterType="string">
+        delete from user_address_info
+        where uid = #{uid,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

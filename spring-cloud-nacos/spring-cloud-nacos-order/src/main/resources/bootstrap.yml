@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: spring-cloud-nacos-order-service
+  profiles:
+      active: dev
+  cloud:
+    nacos:
+      server-addr: 114.214.219.193:8848
+      config:
+        file-extension: yaml
+        timeout: 500000
+
+#        server-addr: 114.214.219.193:8848
+##        namespace: ee3727bc-f2ec-4bb8-b0ce-91037658b3b1

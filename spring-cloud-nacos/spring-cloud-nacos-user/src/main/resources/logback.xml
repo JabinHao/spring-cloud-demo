@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <property name="LOG_HOME" value="${user.home}/data/logs/spring-cloud-demo/spring-cloud-nacos/user-service/${HOSTNAME}"/>
+ 
+    <property name="NORMAL_PATTERN" value="%d{HH:mm:ss.SSS} %X{traceId} [%thread] %-5level %logger{0} -%msg%n"/>
+<!--    <property name="NORMAL_PATTERN"
+              value="%d{ISO8601} game-passport-api:%-5level &#45;&#45; %-50.50logger &#45;&#45; %msg | sh-tencent%n"/>-->
+    <property name="SERIOUS_PATTERN" value="%d{HH:mm:ss.SSS} %X{traceId} [%thread] %-5level %logger{0} -%msg%n"/>
+    <!--<property name="SERIOUS_PATTERN" value="%d{ISO8601} [%-16.16thread] %-5level &#45;&#45; %-60.60class [%4line] &#45;&#45; %msg | sh-tencent%n"/>-->
+
+
+    <!-- 异步日志提取调用者数据标识 true/false -->
+    <property name="includeCallerData" value="true"/>
+    <!-- 异步日志的队列容量 -->
+    <property name="queueSize" value="256"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <encoder>
+            <pattern>${SERIOUS_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_HOME}/info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/info.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- special level -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
+        <file>${LOG_HOME}/error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/error.%d{yyyyMMdd}.log.gz</fileNamePattern>
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${SERIOUS_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- api -->
+    <appender name="APP_API_INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_HOME}/appApiInfo.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/appApiInfo.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>30</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+
+    <!-- WARN -->
+    <appender name="COMMON_WARN_ROLL_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+        </filter>
+        <file>${LOG_HOME}/commonWarnRolling.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/commonWarnRolling.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>3</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <appender name="COMMON_WARN_ROLL_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+        <includeCallerData>${includeCallerData}</includeCallerData>
+        <appender-ref ref="COMMON_WARN_ROLL_APPENDER"/>
+    </appender>
+
+
+    <!-- COMMON-CONSUME-MSG-HANDLE ERROR -->
+    <appender name="COMMON_CONSUME_MSG_HANDLE_ERROR_RETRY_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_HOME}/commonConsumeMsgHandleErrorRetry.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/commonConsumeMsgHandleErrorRetry.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON_CONSUME_MSG_HANDLE_ERROR_RETRY_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+        <includeCallerData>${includeCallerData}</includeCallerData>
+        <appender-ref ref="COMMON_CONSUME_MSG_HANDLE_ERROR_RETRY_APPENDER"/>
+    </appender>
+
+    <!-- COMMON-CONSUME-MSG-HANDLE INFO -->
+    <appender name="COMMON_CONSUME_MSG_HANDLE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_HOME}/commonConsumeMsgHandle.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/commonConsumeMsgHandle.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>5</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON_CONSUME_MSG_HANDLE_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+        <includeCallerData>${includeCallerData}</includeCallerData>
+        <appender-ref ref="COMMON_CONSUME_MSG_HANDLE_APPENDER"/>
+    </appender>
+
+    <!-- COMMON-CONSUME-MSG-ANALYSE INFO -->
+    <appender name="COMMON_CONSUME_MSG_ANALYSE_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>${LOG_HOME}/commonConsumeMsgAnalyse.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/commonConsumeMsgAnalyse.%d{yyyyMMddHH}.%i.log.gz</fileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${NORMAL_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="COMMON_CONSUME_MSG_ANALYSE_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+        <discardingThreshold>0</discardingThreshold>
+        <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+        <queueSize>${queueSize}</queueSize>
+        <includeCallerData>${includeCallerData}</includeCallerData>
+        <appender-ref ref="COMMON_CONSUME_MSG_ANALYSE_APPENDER"/>
+    </appender>
+
+    <!-- 自定义logger输出指定类日志、业务日志；root作为默认logger -->
+    <logger name ="APP_API_INFO" additivity="false" level="INFO">
+        <appender-ref ref="APP_API_INFO_APPENDER"/>
+    </logger>
+
+    <logger name ="COMMON_CONSUME_MSG_HANDLE_ERROR_RETRY" additivity="false" level="INFO">
+        <appender-ref ref="COMMON_CONSUME_MSG_HANDLE_ERROR_RETRY_APPENDER_ASYNC"/>
+    </logger>
+
+    <logger name ="COMMON_CONSUME_MSG_HANDLE_INFO" additivity="false" level="INFO">
+        <appender-ref ref="COMMON_CONSUME_MSG_HANDLE_APPENDER_ASYNC"/>
+    </logger>
+
+    <logger name ="COMMON_CONSUME_MSG_ANALYSE_INFO" additivity="false" level="INFO">
+        <appender-ref ref="COMMON_CONSUME_MSG_ANALYSE_APPENDER_ASYNC"/>
+    </logger>
+
+    <logger name ="COMMON_WARN_ROLL" additivity="false" level="INFO">
+        <appender-ref ref="COMMON_WARN_ROLL_APPENDER_ASYNC"/>
+    </logger>
+
+
+    <!-- level属性：指定根logger的分配级别 -->
+    <root level="INFO">
+        <!--生产环境去掉输出控制台-->
+        <!-- ref属性：指定根logger关联的appender -->
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="INFO"/>
+        <!--<appender-ref ref="DEBUG"/>-->
+        <!-- APP_ERROR: WARN ERROR OFF -->
+        <appender-ref ref="ERROR"/>
+    </root>
+
+
+</configuration>

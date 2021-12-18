@@ -1,0 +1,22 @@
+server:
+  port: 9091
+
+spring:
+  datasource:
+    username: root
+    password: pvkYQN2yzVWZwGqcTzkb
+    url: jdbc:mysql://114.214.219.193:3309/spring_cloud?useUnicode=true&allowPublicKeyRetrieval=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 114.214.219.193:8848
+#        cluster-name: material-research
+#        namespace: ee3727bc-f2ec-4bb8-b0ce-91037658b3b1
+#        ephemeral: false # 非临时实例
+
+mybatis:
+  type-aliases-package: com.olivine.order.domain
+  mapper-locations:
+    - classpath:mybatis/mapper/**Mapper.xml
+
