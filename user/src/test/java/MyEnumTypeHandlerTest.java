@@ -1,6 +1,6 @@
 import com.olivine.user.enums.Gender;
+import com.olivine.user.enums.Gender;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @Author jphao

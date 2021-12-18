@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--指定约束文件-->
 <mapper namespace="com.olivine.user.mapper.UserMapper">
 
-    <resultMap id="BaseResultMap" type="com.olivine.user.domain.UserDO">
+    <resultMap id="BaseResultMap" type="UserDO">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="uid" jdbcType="VARCHAR" property="uid"/>
         <result column="gender" jdbcType="OTHER" property="gender"/>
@@ -36,7 +36,7 @@
         where uid = #{uid,jdbcType=VARCHAR}
     </delete>
 
-    <insert id="insertUser" parameterType="com.olivine.user.domain.UserDO" keyProperty="id" useGeneratedKeys="true">
+    <insert id="insertUser" parameterType="UserDO" keyProperty="id" useGeneratedKeys="true">
         insert into user_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -79,7 +79,7 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByUid" parameterType="com.olivine.user.domain.UserDO">
+    <update id="updateByUid" parameterType="UserDO">
         update user_info
         <set>
             <if test="gender != null">

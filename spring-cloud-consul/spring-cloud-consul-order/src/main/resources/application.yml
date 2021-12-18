@@ -11,14 +11,14 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   cloud:
     consul:
-      host: 114.214.219.193
+      host: 192.168.124.5
       port: 8500
       discovery:
-        instance-id: ${spring.application.name}-01
+        instance-id: ${spring.application.name}-02
         service-name: ${spring.application.name}
         port: ${server.port}
         prefer-ip-address: true
-        ip-address: 114.214.219.193
+        ip-address: 114.214.191.43
         health-check-interval: 10s
 
 mybatis:

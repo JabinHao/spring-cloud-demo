@@ -1,0 +1,31 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: spring-cloud-feign-demo
+  cloud:
+    consul:
+      host: 114.214.219.193
+      port: 8500
+      discovery:
+        register: false
+logging:
+  level:
+    com:
+      olivine:
+        openfeign:
+          remote: debug
+feign:
+  client:
+    config:
+#      default: # 全局配置
+      spring-cloud-consul-order-service:
+        connectTimeout: 5000
+        readTimeout: 5000
+        loggerLevel: FULL
+      spring-cloud-user-service:
+        loggerLevel: HEADERS
+  httpclient:
+    enabled: true
+    max-connections: 30
+
