@@ -5,6 +5,7 @@ import com.olivine.user.dto.base.CommonResponse;
 import com.olivine.user.enums.ApiCode;
 import com.olivine.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class UserController {
         final UserDTO userDTO = userService.findInfoByUid(uid);
         if (userDTO == null)
             return new CommonResponse<>(ApiCode.FAILED);
+
 
         return CommonResponse.success(userDTO);
     }
