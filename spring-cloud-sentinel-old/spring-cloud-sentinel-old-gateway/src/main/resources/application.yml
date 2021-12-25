@@ -1,0 +1,43 @@
+server:
+  port: 8013
+
+spring:
+  application:
+    name: spring-cloud-sentinel-gateway
+  cloud:
+    consul:
+      host: 114.214.219.193
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}-01
+        service-name: ${spring.application.name}
+        port: ${server.port}
+        prefer-ip-address: true
+        health-check-interval: 10s
+        ip-address: 114.214.219.193
+        register: false
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://spring-cloud-user-service
+          predicates:
+            - Path=/user/**
+        - id: order-service
+          uri: lb://spring-cloud-consul-order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - AddRequestHeader=GateWay, ${spring.application.name}
+      default-filters:
+        - PrefixPath=/httpbin
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "https://localhost:8080"
+            allowedMethods:
+              - GET
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 36000 # 跨域检测有效时间
