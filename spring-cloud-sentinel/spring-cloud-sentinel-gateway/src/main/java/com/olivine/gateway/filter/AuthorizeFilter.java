@@ -16,13 +16,14 @@ import java.util.Objects;
  * @Description
  */
 @Order(-1)
-@Component
+//@Component
 public class AuthorizeFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         final String auth = exchange.getRequest().getQueryParams().getFirst("auth");
-        if (Objects.equals(auth, "admin"))
+        if (Objects.equals(auth, "admin")) {
             return chain.filter(exchange);
+        }
         exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
         return exchange.getResponse().setComplete();
     }

@@ -19,7 +19,7 @@ spring:
     nacos:
       discovery:
         server-addr: 114.214.219.193:8848
-        register-enabled: false
+#        register-enabled: false
 
 feign:
   httpclient:

@@ -15,15 +15,15 @@ import java.util.Objects;
  * @Date 2021/12/15 22:10
  * @Description
  */
-@Order(-1)
-@Component
-public class AuthorizeFilter implements GlobalFilter {
-    @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        final String auth = exchange.getRequest().getQueryParams().getFirst("auth");
-        if (Objects.equals(auth, "admin"))
-            return chain.filter(exchange);
-        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-        return exchange.getResponse().setComplete();
-    }
-}
+//@Order(-1)
+//@Component
+//public class AuthorizeFilter implements GlobalFilter {
+//    @Override
+//    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+//        final String auth = exchange.getRequest().getQueryParams().getFirst("auth");
+//        if (Objects.equals(auth, "admin"))
+//            return chain.filter(exchange);
+//        exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+//        return exchange.getResponse().setComplete();
+//    }
+//}

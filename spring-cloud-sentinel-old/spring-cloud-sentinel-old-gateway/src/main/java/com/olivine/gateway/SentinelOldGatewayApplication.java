@@ -2,6 +2,7 @@ package com.olivine.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * @Author jphao
@@ -9,8 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description
  */
 @SpringBootApplication
-public class GatewayApplication {
+@EnableDiscoveryClient
+public class SentinelOldGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication.run(SentinelOldGatewayApplication.class, args);
     }
 }

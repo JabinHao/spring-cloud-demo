@@ -1,35 +1,28 @@
 server:
-  port: 8013
+  port: 8023
 
 spring:
   application:
-    name: spring-cloud-sentinel-gateway
+    name: spring-cloud-sentinel-old-gateway
   cloud:
-    consul:
-      host: 114.214.219.193
-      port: 8500
+    nacos:
       discovery:
-        instance-id: ${spring.application.name}-01
-        service-name: ${spring.application.name}
-        port: ${server.port}
-        prefer-ip-address: true
-        health-check-interval: 10s
-        ip-address: 114.214.219.193
-        register: false
+        server-addr: 114.214.219.193:8848
     gateway:
       routes:
         - id: user-service
-          uri: lb://spring-cloud-user-service
+          uri: lb://spring-cloud-sentinel-old-user-service
           predicates:
             - Path=/user/**
+          filters:
+            - AddRequestHeader=origin, user
         - id: order-service
-          uri: lb://spring-cloud-consul-order-service
+          uri: lb://spring-cloud-sentinel-old-order-service
           predicates:
             - Path=/order/**
           filters:
             - AddRequestHeader=GateWay, ${spring.application.name}
-      default-filters:
-        - PrefixPath=/httpbin
+            - AddRequestHeader=origin, order
       globalcors:
         add-to-simple-url-handler-mapping: true
         cors-configurations:

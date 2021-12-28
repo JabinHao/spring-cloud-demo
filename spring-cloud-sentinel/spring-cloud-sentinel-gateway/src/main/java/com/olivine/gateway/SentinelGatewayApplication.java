@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description
  */
 @SpringBootApplication
-public class GatewayApplication {
+public class SentinelGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GatewayApplication.class, args);
+        SpringApplication.run(SentinelGatewayApplication.class, args);
     }
 }
