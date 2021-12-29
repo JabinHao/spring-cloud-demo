@@ -16,7 +16,7 @@ spring:
     sentinel:
       transport:
         port: 8725
-        dashboard: 114.214.219.193:8000
+        dashboard: 114.214.219.193:8080
       filter:
         enabled: true
   main:
