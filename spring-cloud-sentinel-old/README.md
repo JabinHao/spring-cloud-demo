@@ -147,6 +147,36 @@
     Pull 模式 | 扩展写数据源（WritableDataSource）， 客户端主动向某个规则管理中心定期轮询拉取规则，这个规则中心可以是 RDBMS、文件 等 | 简单，无任何依赖；规则持久化	不保证一致性；实时性不保证，拉取过于频繁也可能会有性能问题。
     Push 模式 | 扩展读数据源（ReadableDataSource），规则中心统一推送，客户端通过注册监听器的方式时刻监听变化，比如使用 Nacos、Zookeeper 等配置中心。这种方式有更好的实时性和一致性保证。生产环境下一般采用 push 模式的数据源。	规则持久化；一致性；快速 | 引入第三方依赖
 
-2. 
+2. 规则持久化实现：nacos（push模式）
+   * 依赖
+      ```xml
+      <dependency>
+          <groupId>com.alibaba.csp</groupId>
+          <artifactId>sentinel-datasource-nacos</artifactId>
+      </dependency>
+      ```
+
+   * 修改微服务中的sentinel配置
+      ```yaml
+      spring:
+        cloud:
+          datasource:
+            flow: # 限流
+              nacos:
+                server-addr: localhost:8848
+                dataId: order-service-flow-rules
+                groupId: SENTINEL_GROUP
+                rule-type: flow      
+            degrade: # 降级           
+              nacos:            
+                server-addr: loc
+                dataId: order-se
+                groupId: SENTINE
+                rule-type: degrade    
+      ```
+
+3. sentinel-dashboard 设置：
+   * 整合nacos需要修改sentinel源码并重新打包
+   * release 有打包好的 sentinel-1.8.3
       
 
