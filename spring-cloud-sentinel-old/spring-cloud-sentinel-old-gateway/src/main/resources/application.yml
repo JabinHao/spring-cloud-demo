@@ -1,0 +1,36 @@
+server:
+  port: 8023
+
+spring:
+  application:
+    name: spring-cloud-sentinel-old-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 114.214.219.193:8848
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://spring-cloud-sentinel-old-user-service
+          predicates:
+            - Path=/user/**
+          filters:
+            - AddRequestHeader=origin, user
+        - id: order-service
+          uri: lb://spring-cloud-sentinel-old-order-service
+          predicates:
+            - Path=/order/**
+          filters:
+            - AddRequestHeader=GateWay, ${spring.application.name}
+            - AddRequestHeader=origin, order
+      globalcors:
+        add-to-simple-url-handler-mapping: true
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "https://localhost:8080"
+            allowedMethods:
+              - GET
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 36000 # 跨域检测有效时间

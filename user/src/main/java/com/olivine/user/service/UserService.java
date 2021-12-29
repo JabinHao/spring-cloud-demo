@@ -13,11 +13,13 @@ public interface UserService {
 
     UserDTO findByUid(String uid);
 
+    UserDTO findInfoByUid(String uid);
+
     void updateByUid(UserDTO userDTO);
 
-    int saveUser(UserDTO userDTO);
+    void saveUser(UserDTO userDTO);
 
-    int deleteByUid(String uid);
+    void deleteByUid(String uid);
 
     List<UserDTO> findAll();
 }

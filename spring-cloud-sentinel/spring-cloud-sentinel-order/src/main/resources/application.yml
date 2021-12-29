@@ -1,0 +1,29 @@
+server:
+  port: 8011
+
+spring:
+  application:
+    name: spring-cloud-sentinel-order-service
+  datasource:
+    username: root
+    password: pvkYQN2yzVWZwGqcTzkb
+    url: jdbc:mysql://114.214.219.193:3309/spring_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 114.214.219.193:8848
+    sentinel:
+      transport:
+        port: 8725
+        dashboard: 114.214.219.193:8080
+      filter:
+        enabled: true
+  main:
+    allow-circular-references: true
+
+
+mybatis:
+  type-aliases-package: com.olivine.order.domain
+  mapper-locations:
+    - classpath:mapper/**Mapper.xml

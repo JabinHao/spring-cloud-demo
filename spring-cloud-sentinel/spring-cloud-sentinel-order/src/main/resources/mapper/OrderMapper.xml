@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><!--指定约束文件-->
+<mapper namespace="com.olivine.order.mapper.OrderMapper">
+
+    <resultMap type="orderDO" id="OrderMap">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="uid" column="uid" jdbcType="VARCHAR"/>
+        <result property="count" column="count" jdbcType="INTEGER"/>
+        <result property="orderId" column="order_id" jdbcType="VARCHAR"/>
+        <result property="tradeId" column="trade_id" jdbcType="VARCHAR"/>
+        <result property="productId" column="product_id" jdbcType="VARCHAR"/>
+        <result property="totalPrice" column="total_price" jdbcType="DOUBLE"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="ctime" column="ctime" jdbcType="TIMESTAMP"/>
+        <result property="ptime" column="ptime" jdbcType="TIMESTAMP"/>
+        <result property="dtime" column="dtime" jdbcType="TIMESTAMP"/>
+        <result property="mtime" column="mtime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, uid, count, order_id, trade_id, product_id, total_price, address, ctime, ptime, dtime, mtime
+    </sql>
+
+    <select id="findByOrderId" resultMap="OrderMap">
+        select
+            <include refid="Base_Column_List"/>
+        from order_info
+        where order_id = #{orderId}
+    </select>
+
+    <select id="findByUid" resultMap="OrderMap">
+        select
+            <include refid="Base_Column_List"/>
+        from order_info
+        where uid = #{uid}
+        order by `ctime`
+    </select>
+
+    <insert id="insertOrder" parameterType="orderDO" keyProperty="id" useGeneratedKeys="true">
+        insert into order_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="tradeId != null">
+                trade_id,
+            </if>
+            <if test="productId != null">
+                product_id,
+            </if>
+            <if test="totalPrice != null">
+                total_price,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="ctime != null">
+                ctime,
+            </if>
+            <if test="ptime != null">
+                ptime,
+            </if>
+            <if test="dtime != null">
+                dtime,
+            </if>
+            <if test="mtime != null">
+                mtime
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="uid != null">
+                #{uid,jdbcType=VARCHAR},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeId != null">
+                #{tradeId,jdbcType=VARCHAR},
+            </if>
+            <if test="productId != null">
+                #{productId, jdbcType=VARCHAR},
+            </if>
+            <if test="totalPrice != null">
+                #{totalPrice, jdbcType=DOUBLE},
+            </if>
+            <if test="address != null">
+                #{address, jdbcType=VARCHAR},
+            </if>
+            <if test="ctime != null">
+                #{ctime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ptime != null">
+                #{ptime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="dtime != null">
+                #{dtime, jdbcType=TIMESTAMP},
+            </if>
+            <if test="mtime != null">
+                #{mtime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+    </insert>
+</mapper>

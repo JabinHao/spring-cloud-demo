@@ -1,0 +1,41 @@
+server:
+  port: 8012
+
+spring:
+  main:
+    allow-circular-references: true
+  application:
+    name: spring-cloud-sentinel-user-service
+  datasource:
+    username: root
+    password: pvkYQN2yzVWZwGqcTzkb
+    url: jdbc:mysql://114.214.219.193:3309/spring_cloud?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    sentinel:
+      transport:
+        port: 9720
+        dashboard: 114.214.219.193:8000
+      log:
+        dir: ${user.home}/data/spring-cloud/sentinel/logs/csp
+    nacos:
+      discovery:
+        server-addr: 114.214.219.193:8848
+        register-enabled: false
+
+feign:
+  httpclient:
+    enabled: true
+    max-connections: 500
+    max-connections-per-route: 50
+  sentinel:
+    enabled: true
+
+mybatis:
+  type-aliases-package: com.olivine.user.domain
+  mapper-locations:
+    - classpath:mapper/**Mapper.xml
+
+custom:
+  order:
+    name: spring-cloud-sentinel-order-service

@@ -46,6 +46,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDTO findInfoByUid(String uid) {
+        UserDTO userDTO = findByUid(uid);
+        if (userDTO == null)
+            return null;
+
+        String url = "http://localhost:8081/order/get/by/uid/" + uid;
+        final CommonResponse response = restTemplate.getForObject(url, CommonResponse.class);
+        assert response != null;
+        final Object data = response.getData();
+        if (data != null){
+            List<OrderDTO> orderDTOList = (List<OrderDTO>) data;
+            userDTO.setOrders(orderDTOList);
+        }
+        return userDTO;
+    }
+
+    @Override
     @Transactional
     public void updateByUid(UserDTO userDTO) {
         final UserDO userDO = UserConvertUtil.dtoToUserDO(userDTO);
@@ -58,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public int saveUser(UserDTO userDTO) {
+    public void saveUser(UserDTO userDTO) {
         final String gender = userDTO.getGender();
         if (!Objects.equals(gender, "man") && !Objects.equals(gender, "woman"))
             throw new RuntimeException("gender error, must be man or woman");
@@ -81,14 +98,12 @@ public class UserServiceImpl implements UserService {
                 }
             }
         }
-        return 1;
     }
 
     @Override
-    public int deleteByUid(String uid) {
+    public void deleteByUid(String uid) {
         userMapper.deleteByUid(uid);
         addressMapper.deleteByUid(uid);
-        return 1;
     }
 
     @Override

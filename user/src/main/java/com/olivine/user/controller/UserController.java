@@ -3,10 +3,8 @@ package com.olivine.user.controller;
 import com.olivine.user.dto.UserDTO;
 import com.olivine.user.dto.base.CommonResponse;
 import com.olivine.user.enums.ApiCode;
-import com.olivine.user.remote.order.dto.OrderDTO;
 import com.olivine.user.service.UserService;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,11 +18,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final RestTemplate restTemplate;
 
-    public UserController(UserService userService, RestTemplate restTemplate) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.restTemplate = restTemplate;
     }
 
     @RequestMapping(value = "/get/{uid}", method = RequestMethod.GET)
@@ -46,19 +42,9 @@ public class UserController {
     @RequestMapping(value = "/get/info/{uid}", method = RequestMethod.GET)
     public CommonResponse<UserDTO> getUserInfo(@PathVariable("uid") String uid){
 
-        final UserDTO userDTO = userService.findByUid(uid);
+        final UserDTO userDTO = userService.findInfoByUid(uid);
         if (userDTO == null)
             return new CommonResponse<>(ApiCode.FAILED);
-
-        String url = "http://localhost:8081/order/get/by/uid/" + uid;
-
-        final CommonResponse response = restTemplate.getForObject(url, CommonResponse.class);
-        assert response != null;
-        final Object data = response.getData();
-        if (data != null){
-            List<OrderDTO> orderDTOList = (List<OrderDTO>) data;
-            userDTO.setOrders(orderDTOList);
-        }
 
         return CommonResponse.success(userDTO);
     }
