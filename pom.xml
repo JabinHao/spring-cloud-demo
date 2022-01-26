@@ -20,6 +20,7 @@
         <module>spring-cloud-gateway</module>
         <module>spring-cloud-nacos</module>
         <module>spring-cloud-sentinel</module>
+        <module>spring-cloud-seata</module>
     </modules>
 
     <groupId>com.olivine</groupId>
@@ -36,6 +37,7 @@
         <spring-cloud.alibaba.version>2.2.7.RELEASE</spring-cloud.alibaba.version>
         <mysql.version>8.0.27</mysql.version>
         <mybatis.version>2.2.0</mybatis.version>
+        <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
     </properties>
 
     <dependencyManagement>
